@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fluid Networks is becoming Complete IT</title>
+    
+    <!-- 
+        DEPENDENCIES:
+        1. Tailwind CSS
+        2. GSAP (Animation)
+        3. FontAwesome
+        4. Fonts (Roboto for Old, Inter for New)
+    -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* CORE */
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background-color: #0f172a; }
+        .layer { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; overflow: hidden; }
+
+        /* --- LAYER 1: FLUID NETWORKS (OLD BRAND) --- */
+        #site-old {
+            z-index: 3; background: #fff; font-family: 'Roboto', sans-serif;
+            transform-origin: center center;
+        }
+        .fluid-header { border-bottom: 1px solid #e5e7eb; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; background: white; }
+        .fluid-nav-link { color: #444; font-weight: 500; font-size: 14px; text-transform: uppercase; margin-left: 25px; }
+        .fluid-btn { background-color: #8DC63F; color: white; padding: 10px 24px; border-radius: 4px; font-weight: 700; text-transform: uppercase; font-size: 13px; }
+        .fluid-hero {
+            position: relative; height: 100%; width: 100%;
+            background: url('https://images.unsplash.com/photo-1486325212027-8081e485255e?q=80&w=2070&auto=format&fit=crop') no-repeat center center;
+            background-size: cover; display: flex; align-items: center; justify-content: center;
+        }
+        .fluid-hero::before { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.4); }
+        .fluid-content { position: relative; z-index: 2; text-align: center; color: white; }
+        .fluid-h1 { font-size: 4rem; font-weight: 800; margin-bottom: 1.5rem; text-transform: uppercase; line-height: 1.1; }
+
+        /* --- LAYER 2: COMPLETE IT (NEW BRAND) --- */
+        #site-new {
+            z-index: 1; background: #0b0f19; color: #fff; font-family: 'Inter', sans-serif;
+            display: flex; flex-direction: column;
+        }
+        .complete-nav { padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; background: white; border-bottom: 1px solid #f1f5f9; }
+        .complete-hero {
+            flex: 1; position: relative; display: flex; align-items: center;
+            background: radial-gradient(circle at 70% 30%, #1e293b 0%, #0f172a 100%);
+        }
+        /* Blue/White Faded Motion Link */
+        .manual-redirect {
+            position: absolute; bottom: 30px; width: 100%; text-align: center;
+            font-size: 13px; color: rgba(255,255,255,0.4); text-decoration: none;
+            animation: breathe 3s ease-in-out infinite; z-index: 50;
+        }
+        .manual-redirect:hover { color: white; text-decoration: underline; }
+        @keyframes breathe { 0%, 100% { opacity: 0.4; transform: scale(1); } 50% { opacity: 0.8; transform: scale(1.02); } }
+
+        /* --- LAYER 3: NEON OVERLAY --- */
+        #overlay-container {
+            z-index: 10; display: flex; align-items: center; justify-content: center;
+            position: absolute; inset: 0;
+            background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(15px);
+            opacity: 0;
+        }
+
+        .neon-box {
+            position: relative; background: rgba(255, 255, 255, 0.95);
+            padding: 4rem 5rem; border-radius: 12px;
+            text-align: center; max-width: 750px; width: 90%;
+            box-shadow: 0 0 50px rgba(0, 136, 204, 0.2);
+            overflow: hidden;
+        }
+
+        /* Neon Border Animation */
+        .neon-box::before {
+            content: ''; position: absolute; inset: 0; padding: 3px; /* Border width */
+            border-radius: 12px; 
+            background: linear-gradient(90deg, #0088cc, #ffffff, #0088cc, #ffffff);
+            background-size: 300% 300%;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: neonFlow 3s linear infinite;
+        }
+
+        @keyframes neonFlow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        .msg-title { font-size: 2.5rem; font-weight: 800; color: #1e293b; margin-bottom: 1rem; letter-spacing: -0.02em; }
+        .msg-blue { color: #0088cc; }
+        
+        /* Logo Morph Container */
+        .logo-stage { height: 60px; margin-bottom: 2rem; position: relative; display: flex; justify-content: center; align-items: center; }
+        .logo-img { position: absolute; max-height: 100%; transition: all 0.5s; }
+
+        /* Progress Bar */
+        .progress-track { width: 100%; height: 4px; background: #e2e8f0; margin-top: 2.5rem; border-radius: 2px; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #0088cc, #60a5fa); width: 0%; box-shadow: 0 0 10px #60a5fa; }
+
+    </style>
+</head>
+<body>
+
+    <!-- ========================================== -->
+    <!-- LAYER 2: COMPLETE IT (DESTINATION)         -->
+    <!-- ========================================== -->
+    <div id="site-new" class="layer">
+        <nav class="complete-nav">
+            <img src="https://cdn.prod.website-files.com/6814dc1cd67c2312761bb61a/6821b6b5d13b0922f75dbc48_logo.svg" alt="Complete IT" style="height: 32px;">
+            <div class="hidden md:flex gap-8 text-sm font-semibold text-gray-800">
+                <span>Solutions</span><span>Company</span><span>Resources</span>
+                <span class="px-4 py-2 bg-slate-900 text-white rounded-full">Book Meeting</span>
+            </div>
+        </nav>
+        <div class="complete-hero">
+            <div class="container mx-auto px-8 grid grid-cols-1 md:grid-cols-2">
+                <div class="text-white z-10">
+                    <span class="text-blue-400 font-bold tracking-widest uppercase text-xs mb-4 block opacity-0 fade-up">Evolution</span>
+                    <h1 class="text-6xl font-bold mb-6 opacity-0 fade-up">Trusted Technology,<br>Proven Partnership.</h1>
+                    <p class="text-xl text-slate-300 mb-8 opacity-0 fade-up">Bridging your business to the future.</p>
+                </div>
+            </div>
+            <!-- Dynamic Background -->
+            <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-overlay">
+        </div>
+        
+        <!-- Faded Motion Link (Unstection/Intersection) -->
+        <a href="https://complete.net" class="manual-redirect">
+            Click here if you are not redirected automatically <i class="fas fa-arrow-right ml-1"></i>
+        </a>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- LAYER 1: FLUID NETWORKS (ORIGIN)           -->
+    <!-- ========================================== -->
+    <div id="site-old" class="layer">
+        <!-- Top Utility -->
+        <div class="fluid-top-bar flex justify-end px-10 py-2 border-b text-xs text-gray-500 bg-white">
+            <span class="mr-4">Sales: (805) 585-6350</span>
+            <span class="text-green-600 border border-green-500 px-2 rounded font-bold">VISIBLE-IT HELP SITE</span>
+        </div>
+        <!-- Nav -->
+        <div class="fluid-header">
+            <img src="https://pronto-core-cdn.prontomarketing.com/2/wp-content/uploads/sites/2115/2017/02/logo-fluid-networks.png" alt="Fluid Networks" style="height: 45px;">
+            <div class="hidden md:flex items-center">
+                <button class="fluid-btn">Home</button>
+                <span class="fluid-nav-link">About Us</span>
+                <span class="fluid-nav-link">Cloud Enabled Office™</span>
+                <span class="fluid-nav-link">Services</span>
+                <span class="fluid-nav-link">Contact</span>
+            </div>
+        </div>
+        <!-- Hero -->
+        <div class="fluid-hero">
+            <div class="fluid-content">
+                <h1 class="fluid-h1">YOUR BUSINESS<br>NEEDS A C.E.O.</h1>
+                <p class="text-lg mb-8 max-w-2xl mx-auto drop-shadow-md">
+                    Cloud Enabled Office™ is our fully-integrated cloud technology solution.
+                </p>
+                <button class="fluid-btn" style="font-size:16px; padding:15px 30px;">GO TO THE CLOUD</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- LAYER 3: NEON OVERLAY MESSAGE              -->
+    <!-- ========================================== -->
+    <div id="overlay-container" class="layer">
+        <div class="neon-box">
+            <!-- Logo Morph -->
+            <div class="logo-stage">
+                <img id="logo-old" src="https://pronto-core-cdn.prontomarketing.com/2/wp-content/uploads/sites/2115/2017/02/logo-fluid-networks.png" class="logo-img h-12">
+                <img id="logo-new" src="https://cdn.prod.website-files.com/6814dc1cd67c2312761bb61a/6821b6b5d13b0922f75dbc48_logo.svg" class="logo-img h-10 opacity-0" style="filter:invert(0);">
+            </div>
+
+            <h2 class="msg-title">Fluid Networks is becoming...<br><span class="msg-blue">Complete IT</span></h2>
+            
+            <p class="text-gray-500 mb-8">Upgrading your digital experience.</p>
+            
+            <div class="progress-track">
+                <div id="progress-bar" class="progress-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- LOGIC                                      -->
+    <!-- ========================================== -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const REDIRECT_URL = "https://complete.net";
+            
+            const tl = gsap.timeline({
+                onComplete: () => window.location.href = REDIRECT_URL
+            });
+
+            // 1. Initial Pause (2s)
+            tl.to({}, { duration: 1.5 })
+
+            // 2. Neon Overlay Entry (1s)
+            .to("#overlay-container", { autoAlpha: 1, duration: 0.8 })
+            .from(".neon-box", { y: 50, opacity: 0, duration: 0.8, ease: "back.out(1.7)" }, "<")
+
+            // 3. Logo Morph (1s)
+            .to("#logo-old", { opacity: 0, scale: 0.8, duration: 0.5 }, "+=0.2")
+            .to("#logo-new", { opacity: 1, scale: 1.2, duration: 0.6, ease: "elastic.out(1, 0.6)" }, "<0.2")
+
+            // 4. Progress Fill (3s)
+            .to("#progress-bar", { width: "100%", duration: 3.0, ease: "expo.out" }, "<")
+
+            // 5. Background Morph (Fluid -> Complete)
+            // Blur increases, opacity decreases
+            .to("#site-old", { 
+                filter: "blur(20px) grayscale(80%)", 
+                opacity: 0, 
+                scale: 1.05, 
+                duration: 2.5, 
+                ease: "power2.inOut" 
+            }, "-=2.0")
+
+            // 6. Overlay Exit (1s)
+            .to("#overlay-container", { autoAlpha: 0, duration: 1.0, scale: 1.05 }, "-=0.5")
+
+            // 7. New Site Elements Entrance (Staggered)
+            .to(".fade-up", { 
+                opacity: 1, 
+                y: 0, 
+                duration: 1.0, 
+                stagger: 0.2, 
+                ease: "power3.out" 
+            }, "-=0.5")
+
+            // 8. Final Buffer (2s)
+            .to({}, { duration: 2.0 });
+        });
+    </script>
+</body>
+</html>
